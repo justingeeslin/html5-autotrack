@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+/jquery-2.2.0.js
+/tests/units.html
+/tests/index.html
+/css/style.css
+/perf
+/coverage

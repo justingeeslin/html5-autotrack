@@ -1,0 +1,33 @@
+{
+  "name": "sensibleui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sensible.js",
+  "scripts": {
+    "test": "istanbul cover --include-all-sources jasmine-node tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://justingeeslin@github.com/justingeeslin/sensibleui.git"
+  },
+  "author": "Justin Geeslin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justingeeslin/sensibleui/issues"
+  },
+  "homepage": "https://github.com/justingeeslin/sensibleui",
+  "devDependencies": {
+    "codeclimate-test-reporter": "^0.3.3",
+    "jasmine": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^1.1.1",
+    "karma-htmlfile-reporter": "^0.3.4",
+    "karma-jasmine": "^0.3.7",
+    "karma-safari-launcher": "^0.1.1"
+  },
+  "dependencies": {
+    "istanbul": "^0.4.5",
+    "jasmine-node": "^1.14.5"
+  }
+}
