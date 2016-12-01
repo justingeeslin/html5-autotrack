@@ -1,4 +1,3 @@
-
 VideoAutoTrack = function (opts, contentTarget) {
 	var self = this;
 
@@ -23,6 +22,10 @@ VideoAutoTrack = function (opts, contentTarget) {
 	this.isStarted = false;
 	// Has the video reached the end.
 	this.isEnded = false;
+	// has the video been removed either through DOM mutations or Window unloads.
+	this.isRemoved = false;
+	// has the video been removed after pressing play for the first time and before it ends.
+	this.isAbandoned = false;
 
 	$.extend(this, defaults, opts);
 
@@ -88,12 +91,14 @@ VideoAutoTrack = function (opts, contentTarget) {
 	// Things to do on removal of the video, either by DOM manipulation or window unloading.
 	var onVideoRemoval = function() {
 		console.log('Video removed.');
+		self.isRemoved = true;
 
 		if (self.isStarted && !self.isEnded) {
+			self.isAbandoned = true;
 			console.log('Video abandoned. ie Started but never ended.')
 		}
 	}
-	this.target.on('remove', onVideoRemoval);
+	this.target.parent().on('DOMNodeRemoved', onVideoRemoval);
 	$(window).on('beforeunload', onVideoRemoval);
 
 	this.autotracked = true;
