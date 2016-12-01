@@ -19,8 +19,10 @@ VideoAutoTrack = function (opts, contentTarget) {
 	// Read-only, public variables
 	// Keep up with whether the events have been attached or not.
 	this.autotracked = false;
-
+	// Has the video started played. Even if it was paused, has it ever started playing.
 	this.isStarted = false;
+	// Has the video reached the end.
+	this.isEnded = false;
 
 	$.extend(this, defaults, opts);
 
@@ -77,19 +79,27 @@ VideoAutoTrack = function (opts, contentTarget) {
 
 	this.target.on('ended', function() {
 		console.log('Media Ended at ' + self.target[0].currentTime);
+		self.isEnded = true;
 		self.oncomplete()
 		s.Media.close(videoMeta.name);
+
 	})
+
+	// Things to do on removal of the video, either by DOM manipulation or window unloading.
+	var onVideoRemoval = function() {
+		console.log('Video removed.');
+
+		if (self.isStarted && !self.isEnded) {
+			console.log('Video abandoned. ie Started but never ended.')
+		}
+	}
+	this.target.on('remove', onVideoRemoval);
+	$(window).on('beforeunload', onVideoRemoval);
 
 	this.autotracked = true;
 
 	return this;
 }
-
-console.log('This is video auto track typeof:')
-console.log(typeof VideoAutoTrack)
-console.log('This is video auto track:')
-console.log(VideoAutoTrack)
 
 var initVideoAutoTrack = function() {
 	console.log('Init Video Auto Track')
@@ -102,6 +112,9 @@ var initVideoAutoTrack = function() {
 			console.log('There are video players. Attaching auto track.');
 			var options = {};
 			videoSelection.videoautotrack();
+		}
+		else {
+			console.log('No video players found');
 		}
 
 	}
