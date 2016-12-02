@@ -1,27 +1,39 @@
 describe('VideoAutoTrack', function() {
 
+    //Good Media Event reference https://www.w3.org/2010/05/video/mediaevents.html
 
-    beforeAll(function() {
+    beforeAll(function(done) {
       console.log('Testing VideoAutoTrack.')
       container = $('<div id="video-auto-track"></div>');
       $(document.body).append(container);
 
-      // Borrowed from https://www.w3.org/2010/05/video/mediaevents.html
-      videoHTML = '<video id="video" controls="" preload="none" mediagroup="myVideoGroup" poster="https://media.w3.org/2010/05/sintel/poster.png"><source id="mp4" src="https://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4"><source id="webm" src="https://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm"><source id="ogv" src="https://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg"><p>Your user agent does not support the HTML5 Video element.</p></video>';
+      // Borrowed from http://techslides.com/sample-webm-ogg-and-mp4-video-files-for-html5
+      videoHTML = '<video controls> <source src="/base/demo-videos/small.webm" type="video/webm"> <source src="http://techslides.com/demos/sample-videos/small.ogv" type="video/ogg"> <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4"><source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp></video>';
 
-      container.append(videoHTML);
+      videoEl = $(videoHTML);
+
+      container.append(videoEl);
 
       s.Media.autoTrack = true;
 
+      done();
     });
 
-    afterEach(function() {
+    beforeEach(function() {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000;
+    });
 
+    afterEach(function(done) {
       //Remove the video element
       container.empty();
       //add it back
       console.log('Adding a new video after the test.')
       container.append(videoHTML);
+
+      $('video').on('canplaythrough', function () {
+        console.log('Can play though.')
+        done();
+      });
 
       // Expect this to be the default on pages
       s.Media.autoTrack = true;
@@ -48,9 +60,6 @@ describe('VideoAutoTrack', function() {
 
       //Press play
       sel[0].play();
-      // sel[0].play();
-      // sel[0].play();
-
 
     });
 
@@ -77,8 +86,12 @@ describe('VideoAutoTrack', function() {
         onplay: function() {
           window.setTimeout(function() {
             //Seek to the end
+            console.log('Seeking to the end..')
+            console.log(sel[0].duration);
+            // console.log('Seeking to the (seekable) end..')
+            // console.log(sel[0].seekable.end(0));
             sel[0].currentTime = sel[0].duration
-          }, 2000)
+          }, 1000)
         },
         oncomplete: function() {
           //If this callback runs, success!
@@ -166,7 +179,6 @@ describe('VideoAutoTrack', function() {
     //
     //
     // })
-
 
 
 });
