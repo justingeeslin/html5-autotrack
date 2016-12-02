@@ -22,6 +22,8 @@ module.exports = function(config) {
 
       'index.js',
       'tests/VideoAutoTrack.js',
+
+      {pattern: 'demo-videos/*.*', watched: false, included: false, served: true, nocache: false}
     ],
 
 
@@ -97,7 +99,7 @@ module.exports = function(config) {
       'chrome_perf',
       'Safari',
       'Firefox',
-      // 'IE11'
+      'IE11'
     ],
 
 		customLaunchers: {
