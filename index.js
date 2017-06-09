@@ -148,3 +148,5 @@ var initVideoAutoTrack = function() {
 }( jQuery ));
 
 $(document).ready(initVideoAutoTrack);
+
+module.exports = VideoAutoTrack;
