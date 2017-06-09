@@ -12,8 +12,16 @@ VideoAutoTrack = function (opts, contentTarget) {
 		//Fired when the video finishes
 		oncomplete: function() {},
 		// s.Media.overtrack decides if this class should attach its event handlers to the object. If you want to use this class anyway, set this to true.
-		autoTrackOverride: false
+		autoTrackOverride: false,
+		// Enables logging
+		debug: false
 	};
+
+	this.log = function(msg) {
+		if (self.debug) {
+			console.log(msg);
+		}
+	}
 
 	// Read-only, public variables
 	// Keep up with whether the events have been attached or not.
@@ -44,11 +52,11 @@ VideoAutoTrack = function (opts, contentTarget) {
 		}
 	}
 
-	console.log('This is video el')
-	console.log(this.target)
+	self.log('This is video el')
+	self.log(this.target)
 
 	if (this.classToAdd) {
-		console.log('Adding a class to the tracked video.')
+		self.log('Adding a class to the tracked video.')
 		this.target.addClass(this.classToAdd)
 	}
 
@@ -62,7 +70,7 @@ VideoAutoTrack = function (opts, contentTarget) {
 	var mediaName = 'Video'
 
 	this.target.on('play', function() {
-		console.log('Media Playing from ' + self.target[0].currentTime);
+		self.log('Media Playing from ' + self.target[0].currentTime);
 		self.onplay()
 		s.Media.play(videoMeta.name, self.target[0].currentTime, videoMeta.segmentNum, videoMeta.segment, videoMeta.segmentLength);
 
@@ -76,12 +84,12 @@ VideoAutoTrack = function (opts, contentTarget) {
 	})
 
 	this.target.on('pause', function() {
-		console.log('Media Paused at ' + self.target[0].currentTime);
+		self.log('Media Paused at ' + self.target[0].currentTime);
 		s.Media.stop(videoMeta.name, self.target[0].currentTime);
 	})
 
 	this.target.on('ended', function() {
-		console.log('Media Ended at ' + self.target[0].currentTime);
+		self.log('Media Ended at ' + self.target[0].currentTime);
 		self.isEnded = true;
 		self.oncomplete()
 		s.Media.close(videoMeta.name);
@@ -90,14 +98,16 @@ VideoAutoTrack = function (opts, contentTarget) {
 
 	// Things to do on removal of the video, either by DOM manipulation or window unloading.
 	var onVideoRemoval = function() {
-		console.log('Video removed.');
+		self.log('Video removed.');
 		self.isRemoved = true;
 
 		if (self.isStarted && !self.isEnded) {
 			self.isAbandoned = true;
-			console.log('Video abandoned. ie Started but never ended.')
+			self.log('Video abandoned. ie Started but never ended.')
 		}
 	}
+
+	this.target.on('remove', onVideoRemoval);
 	this.target.parent().on('DOMNodeRemoved', onVideoRemoval);
 	$(window).on('beforeunload', onVideoRemoval);
 
@@ -107,19 +117,19 @@ VideoAutoTrack = function (opts, contentTarget) {
 }
 
 var initVideoAutoTrack = function() {
-	console.log('Init Video Auto Track')
-	if (s.Media.autoTrack) {
-		console.log('Media AutoTrack is enabled. Attaching to HTML5 video players if there are any.')
+	// self.log('Init Video Auto Track')
+	if (typeof s == "object" && typeof s.Media != "undefined" && s.Media.autoTrack) {
+		// self.log('Media AutoTrack is enabled. Attaching to HTML5 video players if there are any.')
 
 		var videoSelection = $('video');
 
 		if (videoSelection.length > 0) {
-			console.log('There are video players. Attaching auto track.');
+			// self.log('There are video players. Attaching auto track.');
 			var options = {};
 			videoSelection.videoautotrack();
 		}
 		else {
-			console.log('No video players found');
+			// self.log('No video players found');
 		}
 
 	}
