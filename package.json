@@ -1,21 +1,21 @@
 {
-  "name": "sensibleui",
+  "name": "html5-autotrack",
   "version": "1.0.0",
   "description": "",
-  "main": "sensible.js",
+  "main": "index.js",
   "scripts": {
-    "test": "istanbul cover --include-all-sources jasmine-node tests"
+    "test": "./node_modules/karma/bin/karma start"
   },
   "repository": {
     "type": "git",
-    "url": "https://justingeeslin@github.com/justingeeslin/sensibleui.git"
+    "url": "https://justingeeslin@github.com/justingeeslin/html5-autotrack.git"
   },
   "author": "Justin Geeslin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/justingeeslin/sensibleui/issues"
+    "url": "https://github.com/justingeeslin/autotrack/issues"
   },
-  "homepage": "https://github.com/justingeeslin/sensibleui",
+  "homepage": "https://github.com/justingeeslin/autotrack",
   "devDependencies": {
     "codeclimate-test-reporter": "^0.3.3",
     "jasmine": "^2.4.1",
