@@ -149,4 +149,6 @@ var initVideoAutoTrack = function() {
 
 $(document).ready(initVideoAutoTrack);
 
-module.exports = VideoAutoTrack;
+if (typeof module !== "undefined") {
+	module.exports = VideoAutoTrack;
+}
