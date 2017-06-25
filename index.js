@@ -38,7 +38,7 @@ VideoAutoTrack = function (opts, contentTarget) {
 	$.extend(this, defaults, opts);
 
 	//jQuery Selection overrides target option
-	this.target = typeof this.target !== "undefined" ? this.target : contentTarget;
+	this.target = typeof contentTarget !== "undefined" ? $(contentTarget) : this.target;
 
 	if (typeof s == "object" && typeof s.Media != "undefined" && s.Media.autoTrack == false) {
 		var msg = 'Using Video Auto Track when Media Auto track is disabled.'
