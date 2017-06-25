@@ -18,7 +18,7 @@ VideoAutoTrack = function (opts, contentTarget) {
 	};
 
 	this.log = function(msg) {
-		if (self.debug) {
+		if (this.debug) {
 			console.log(msg);
 		}
 	}
@@ -52,7 +52,7 @@ VideoAutoTrack = function (opts, contentTarget) {
 		}
 	}
 
-	self.log('This is video el')
+	self.log('Autotracking this video el:')
 	self.log(this.target)
 
 	if (this.classToAdd) {
