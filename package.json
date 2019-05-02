@@ -17,14 +17,14 @@
   },
   "homepage": "https://github.com/justingeeslin/autotrack",
   "devDependencies": {
-    "codeclimate-test-reporter": "^0.3.3",
-    "jasmine": "^2.4.1",
-    "karma": "^0.13.19",
-    "karma-chrome-launcher": "^0.2.2",
+    "codeclimate-test-reporter": "^0.5.1",
+    "jasmine": "^3.4.0",
+    "karma": "^4.1.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
     "karma-htmlfile-reporter": "^0.3.4",
-    "karma-jasmine": "^0.3.7",
-    "karma-safari-launcher": "^0.1.1"
+    "karma-jasmine": "^2.0.1",
+    "karma-safari-launcher": "^1.0.0"
   },
   "dependencies": {
     "istanbul": "^0.4.5",
