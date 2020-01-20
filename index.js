@@ -40,6 +40,11 @@ VideoAutoTrack = function (opts, contentTarget) {
 	//jQuery Selection overrides target option
 	this.target = typeof contentTarget !== "undefined" ? $(contentTarget) : this.target;
 
+	if (typeof s !== "object") {
+		console.error("HTML5 Video Autotrack exiting early because s is not an object.");
+		return;
+	}
+
 	if (typeof s == "object" && typeof s.Media != "undefined" && s.Media.autoTrack == false) {
 		var msg = 'Using Video Auto Track when Media Auto track is disabled.'
 
