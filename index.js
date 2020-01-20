@@ -72,7 +72,13 @@ VideoAutoTrack = function (opts, contentTarget) {
 	this.target.on('play', function() {
 		self.log('Media Playing from ' + self.target[0].currentTime);
 		self.onplay()
-		s.Media.play(videoMeta.name, self.target[0].currentTime, videoMeta.segmentNum, videoMeta.segment, videoMeta.segmentLength);
+
+		if (typeof s.Media !== "undefined" && typeof s.Media.play !== "undefined") {
+			s.Media.play(videoMeta.name, self.target[0].currentTime, videoMeta.segmentNum, videoMeta.segment, videoMeta.segmentLength);
+		}
+		else {
+			console.warn('Attempting to call s.Media.play() but play is undefined.');
+		}
 
 		//If not started
 		if (!self.isStarted) {
@@ -85,14 +91,26 @@ VideoAutoTrack = function (opts, contentTarget) {
 
 	this.target.on('pause', function() {
 		self.log('Media Paused at ' + self.target[0].currentTime);
-		s.Media.stop(videoMeta.name, self.target[0].currentTime);
+		if (typeof s.Media !== "undefined" && typeof s.Media.stop !== "undefined") {
+			s.Media.stop(videoMeta.name, self.target[0].currentTime);
+		}
+		else {
+			console.warn('Attempting to call s.Media.stop() but stop is undefined.');
+		}
+
 	})
 
 	this.target.on('ended', function() {
 		self.log('Media Ended at ' + self.target[0].currentTime);
 		self.isEnded = true;
 		self.oncomplete()
-		s.Media.close(videoMeta.name);
+
+		if (typeof s.Media !== "undefined" && typeof s.Media.close !== "undefined") {
+			s.Media.close(videoMeta.name);
+		}
+		else {
+			console.warn('Attempting to call s.Media.close() but close is undefined.');
+		}
 
 	})
 
